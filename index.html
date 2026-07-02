@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blackrail Trading Co. — Wiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080a;
+  --bg2:#0f131a;
+  --bg3:#161b24;
+  --line:#242b36;
+  --gold:#c9a24b;
+  --gold-dim:#8a7038;
+  --silver:#c7ccd1;
+  --muted:#6b7280;
+  --blue:#4a7fd9;
+  --red:#b3453a;
+  --text:#e7e9ec;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+}
+h1,h2,h3,.brand,.navlink,.stat-label,.rank-name{
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:0.02em;
+}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit;text-decoration:none;}
+
+/* ---------- layout shell ---------- */
+.shell{display:flex;min-height:100vh;}
+.sidebar{
+  width:250px;
+  flex-shrink:0;
+  background:var(--bg2);
+  border-right:1px solid var(--line);
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  padding:28px 0 28px 0;
+}
+.sidebar .brand{
+  display:flex;align-items:center;gap:10px;
+  padding:0 24px 24px 24px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:18px;
+}
+.sidebar .brand svg{width:34px;height:34px;flex-shrink:0;}
+.sidebar .brand-text{font-size:15px;font-weight:700;color:var(--gold);line-height:1.2;}
+.sidebar .brand-text span{display:block;font-size:10px;color:var(--muted);font-weight:500;letter-spacing:0.12em;font-family:'IBM Plex Mono',monospace;}
+
+.navlist{list-style:none;padding:0 12px;}
+.navlist li{margin-bottom:2px;}
+.navlist a{
+  display:block;
+  padding:9px 12px;
+  font-size:14.5px;
+  font-weight:600;
+  color:var(--muted);
+  border-radius:4px;
+  border-left:2px solid transparent;
+  transition:color .15s ease, background .15s ease, border-color .15s ease;
+}
+.navlist a:hover{color:var(--silver);background:rgba(255,255,255,0.03);}
+.navlist a.active{color:var(--gold);border-left-color:var(--gold);background:rgba(201,162,75,0.07);}
+
+.main{flex:1;min-width:0;}
+.section{
+  padding:88px 64px;
+  border-bottom:1px solid var(--line);
+  max-width:900px;
+}
+.section:last-of-type{border-bottom:none;}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.18em;
+  color:var(--gold-dim);
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+h2{font-size:30px;font-weight:700;color:var(--silver);margin-bottom:24px;}
+p{color:#a9afb8;max-width:640px;margin-bottom:16px;}
+p:last-child{margin-bottom:0;}
+.lede{font-size:17px;color:var(--silver);}
+
+/* ---------- hero ---------- */
+.hero{
+  padding:100px 64px 64px 64px;
+  position:relative;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+.hero-emblem{width:64px;height:64px;margin-bottom:28px;}
+.hero h1{
+  font-size:52px;
+  font-weight:700;
+  color:var(--text);
+  max-width:680px;
+  line-height:1.12;
+  margin-bottom:22px;
+}
+.hero h1 em{color:var(--gold);font-style:normal;}
+.hero .tagline{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:14px;
+  color:var(--silver);
+  max-width:560px;
+  border-left:2px solid var(--gold);
+  padding-left:16px;
+  margin-bottom:44px;
+}
+.signal-line{
+  height:1px;
+  width:100%;
+  background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold) 80%,transparent);
+  opacity:0.5;
+  margin-bottom:40px;
+  position:relative;
+}
+.signal-line::after{
+  content:'';
+  position:absolute;top:-1.5px;left:0;
+  width:8px;height:4px;
+  background:var(--gold);
+  box-shadow:0 0 8px 1px var(--gold);
+  animation:travel 5s linear infinite;
+}
+@keyframes travel{
+  0%{left:0%;}
+  100%{left:calc(100% - 8px);}
+}
+@media (prefers-reduced-motion:reduce){
+  .signal-line::after{animation:none;left:0;}
+  html{scroll-behavior:auto;}
+}
+
+.manifest{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);
+  background:var(--bg2);
+}
+.manifest .stat{
+  padding:18px 20px;
+  border-right:1px solid var(--line);
+}
+.manifest .stat:last-child{border-right:none;}
+.stat-label{
+  font-size:10.5px;
+  letter-spacing:0.14em;
+  color:var(--muted);
+  font-family:'IBM Plex Mono',monospace;
+  margin-bottom:6px;
+}
+.stat-value{font-size:17px;font-weight:600;color:var(--gold);font-family:'Rajdhani',sans-serif;}
+
+/* ---------- charter ---------- */
+.charter-list{list-style:none;counter-reset:charter;max-width:640px;}
+.charter-list li{
+  counter-increment:charter;
+  display:flex;
+  gap:18px;
+  padding:16px 0;
+  border-bottom:1px solid var(--line);
+  color:#a9afb8;
+}
+.charter-list li:last-child{border-bottom:none;}
+.charter-list li::before{
+  content:counter(charter,decimal-leading-zero);
+  font-family:'IBM Plex Mono',monospace;
+  color:var(--gold-dim);
+  font-size:13px;
+  flex-shrink:0;
+  padding-top:2px;
+}
+
+/* ---------- ranks table ---------- */
+.rank-table{width:100%;max-width:720px;border-collapse:collapse;margin-top:8px;}
+.rank-table th{
+  text-align:left;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;
+  letter-spacing:0.12em;
+  color:var(--muted);
+  text-transform:uppercase;
+  padding:10px 14px;
+  border-bottom:1px solid var(--line);
+}
+.rank-table td{
+  padding:13px 14px;
+  border-bottom:1px solid var(--line);
+  color:#a9afb8;
+  font-size:14.5px;
+}
+.rank-table tr:last-child td{border-bottom:none;}
+.rank-dot{
+  display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:9px;
+}
+.rank-name{color:var(--silver);font-weight:600;font-size:15px;}
+
+/* ---------- departments ---------- */
+.dept-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);max-width:760px;margin-top:8px;}
+.dept-card{background:var(--bg2);padding:28px;}
+.dept-card h3{font-size:19px;font-weight:700;margin-bottom:4px;}
+.dept-card .dept-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:0.1em;color:var(--muted);margin-bottom:16px;}
+.dept-card p{font-size:14.5px;color:#a9afb8;margin-bottom:0;}
+.dept-trading h3{color:var(--blue);}
+.dept-security h3{color:var(--red);}
+.dept-trading{border-top:2px solid var(--blue);}
+.dept-security{border-top:2px solid var(--red);}
+
+/* ---------- CTA ---------- */
+.cta-box{
+  max-width:640px;
+  border:1px solid var(--gold-dim);
+  background:linear-gradient(180deg,rgba(201,162,75,0.06),transparent);
+  padding:32px;
+  margin-top:8px;
+}
+.cta-box p{color:#a9afb8;margin-bottom:20px;}
+.btn{
+  display:inline-block;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:0.06em;
+  color:var(--bg);
+  background:var(--gold);
+  padding:12px 22px;
+  border-radius:2px;
+  margin-right:10px;
+  transition:background .15s ease;
+}
+.btn:hover{background:#ddb865;}
+.btn.ghost{
+  color:var(--gold);
+  background:transparent;
+  border:1px solid var(--gold-dim);
+}
+.btn.ghost:hover{border-color:var(--gold);}
+
+footer{
+  padding:40px 64px;
+  color:var(--muted);
+  font-size:12.5px;
+  font-family:'IBM Plex Mono',monospace;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+
+/* ---------- mobile ---------- */
+.mobile-topbar{display:none;}
+@media (max-width:860px){
+  .shell{flex-direction:column;}
+  .sidebar{
+    position:relative;height:auto;width:100%;
+    display:none;
+  }
+  .sidebar.open{display:block;}
+  .mobile-topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 20px;
+    background:var(--bg2);
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:10;
+  }
+  .mobile-topbar .brand{display:flex;align-items:center;gap:8px;}
+  .mobile-topbar svg{width:26px;height:26px;}
+  .mobile-topbar .brand-text{font-size:13px;color:var(--gold);font-weight:700;font-family:'Rajdhani',sans-serif;}
+  .mobile-toggle{
+    background:none;border:1px solid var(--line);color:var(--silver);
+    padding:6px 10px;font-family:'IBM Plex Mono',monospace;font-size:11px;border-radius:3px;
+  }
+  .section{padding:56px 24px;}
+  .hero{padding:56px 24px 40px 24px;}
+  .hero h1{font-size:34px;}
+  .manifest{grid-template-columns:1fr 1fr;}
+  .manifest .stat:nth-child(2){border-right:none;}
+  .dept-grid{grid-template-columns:1fr;}
+  footer{padding:32px 24px;}
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-topbar">
+  <div class="brand">
+    <svg viewBox="0 0 200 200"><use href="#emblem"/></svg>
+    <span class="brand-text">BLACKRAIL TRADING CO.</span>
+  </div>
+  <button class="mobile-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">MENÜ</button>
+</div>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <g id="emblem" fill="none" stroke="#c9a24b" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M60,75 L80,45 L100,75"/>
+      <path d="M15,80 L15,150"/>
+      <path d="M185,80 L185,150"/>
+      <path d="M15,80 L100,140 L185,80"/>
+      <path d="M15,150 L100,140 L185,150"/>
+      <path d="M15,150 L100,190 L185,150"/>
+      <path d="M100,140 L100,190"/>
+      <path d="M55,168 L145,168"/>
+    </g>
+  </defs>
+</svg>
+
+<div class="shell">
+  <nav class="sidebar">
+    <div class="brand">
+      <svg viewBox="0 0 200 200"><use href="#emblem"/></svg>
+      <div class="brand-text">BLACKRAIL<span>TRADING CO. · BLKTC</span></div>
+    </div>
+    <ul class="navlist" id="navlist">
+      <li><a href="#start" class="navlink">Start</a></li>
+      <li><a href="#geschichte" class="navlink">Geschichte</a></li>
+      <li><a href="#leitbild" class="navlink">Leitbild</a></li>
+      <li><a href="#charter" class="navlink">Charter</a></li>
+      <li><a href="#raenge" class="navlink">Ränge &amp; Rollen</a></li>
+      <li><a href="#abteilungen" class="navlink">Abteilungen</a></li>
+      <li><a href="#mitglied-werden" class="navlink">Mitglied werden</a></li>
+    </ul>
+  </nav>
+
+  <main class="main">
+
+    <section class="hero" id="start">
+      <svg class="hero-emblem" viewBox="0 0 200 200"><use href="#emblem"/></svg>
+      <h1>Wir liefern, wo andere <em>aufgeben.</em></h1>
+      <div class="tagline">„Wo andere Handelsrouten meiden, fährt die Blackrail. Wir liefern, was gebraucht wird – und verteidigen, was uns gehört."</div>
+      <div class="signal-line"></div>
+      <div class="manifest">
+        <div class="stat">
+          <div class="stat-label">ARCHETYP</div>
+          <div class="stat-value">Corporation + PMC</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">COMMITMENT</div>
+          <div class="stat-value">Regular</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">SPRACHE</div>
+          <div class="stat-value">Deutsch</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">ROLLENSPIEL</div>
+          <div class="stat-value">Aktiv</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="geschichte">
+      <div class="eyebrow">Herkunft</div>
+      <h2>Geschichte</h2>
+      <p class="lede">Blackrail Trading Co. wurde von einer kleinen Gruppe unabhängiger Frachtführer gegründet, die es leid waren, ihre Fracht großen Konzernen und deren Bürokratie zu überlassen.</p>
+      <p>Wo etablierte Handelsrouten aus Angst vor Piraten, Kriminellen oder unsicherem Territorium gemieden wurden, sah Blackrail eine Chance: Wer liefert, wo andere zögern, verdient mehr – und verdient sich Respekt.</p>
+      <p>Aus einer Handvoll Schiffen wurde eine wachsende Flotte, begleitet von einer eigenen Sicherheitsabteilung, die dafür sorgt, dass jede Fracht ihr Ziel erreicht, egal welches Risiko der Weg birgt.</p>
+    </section>
+
+    <section class="section" id="leitbild">
+      <div class="eyebrow">Werte</div>
+      <h2>Leitbild</h2>
+      <p class="lede">Wir glauben an Zuverlässigkeit statt leerer Versprechen. Bei Blackrail zählt, was ankommt – nicht was versprochen wird.</p>
+      <p>Wir handeln dort, wo andere aufgeben, und wir schützen, was uns anvertraut wird. Jedes Mitglied, ob Trader oder Guard, trägt Verantwortung für den Ruf der Company.</p>
+      <p>Profit ist unser Ziel, aber niemals auf Kosten unserer Werte: Ehrlichkeit untereinander, Mut gegenüber Gefahr, und Loyalität zur Crew.</p>
+    </section>
+
+    <section class="section" id="charter">
+      <div class="eyebrow">Regelwerk</div>
+      <h2>Charter</h2>
+      <ol class="charter-list">
+        <li>Jedes Mitglied verpflichtet sich zu respektvollem Umgang innerhalb der Organisation.</li>
+        <li>Handelsentscheidungen der Direktoren sind bindend für laufende Operationen.</li>
+        <li>Security-Mitglieder priorisieren den Schutz von Fracht und Crew vor Eigeninteressen.</li>
+        <li>Gewinne aus offiziellen Org-Operationen werden fair gemäß interner Vereinbarung verteilt.</li>
+        <li>Illoyalität, Betrug an Mitgliedern oder Sabotage führen zum Ausschluss.</li>
+        <li>Neue Mitglieder durchlaufen eine Einführungsphase (Rank 0: Recruit), bevor sie volle Verantwortung übernehmen.</li>
+      </ol>
+    </section>
+
+    <section class="section" id="raenge">
+      <div class="eyebrow">Hierarchie</div>
+      <h2>Ränge &amp; Rollen</h2>
+      <p class="lede">Sechs Stufen, vom Recruit bis zur Unternehmensleitung. Aufstieg erfolgt nach Aktivität, Zuverlässigkeit und Verantwortung.</p>
+      <table class="rank-table">
+        <tr><th>Rang</th><th>Bedeutung</th></tr>
+        <tr><td><span class="rank-dot" style="background:#c9a24b"></span><span class="rank-name">CEO</span></td><td>Gründer, Gesamtleitung</td></tr>
+        <tr><td><span class="rank-dot" style="background:#d4af37"></span><span class="rank-name">Director</span></td><td>Leitet Trading oder Security als Zweig</td></tr>
+        <tr><td><span class="rank-dot" style="background:#b8860b"></span><span class="rank-name">Captain</span></td><td>Führt Konvois und Trupps, erfahrene Mitglieder</td></tr>
+        <tr><td><span class="rank-dot" style="background:#8a8f96"></span><span class="rank-name">Officer</span></td><td>Zuverlässige Mitglieder mit mehr Verantwortung</td></tr>
+        <tr><td><span class="rank-dot" style="background:#5a5e64"></span><span class="rank-name">Trader / Guard</span></td><td>Reguläres, aktives Mitglied</td></tr>
+        <tr><td><span class="rank-dot" style="background:#3a3e48"></span><span class="rank-name">Recruit</span></td><td>Neueinsteiger in der Einführungsphase</td></tr>
+      </table>
+    </section>
+
+    <section class="section" id="abteilungen">
+      <div class="eyebrow">Struktur</div>
+      <h2>Abteilungen</h2>
+      <p class="lede">Zwei Standbeine, eine Crew. Jedes Mitglied wählt nach der Einführungsphase seinen Schwerpunkt.</p>
+      <div class="dept-grid">
+        <div class="dept-card dept-trading">
+          <h3>Trading</h3>
+          <div class="dept-sub">HANDEL · LOGISTIK · ROUTEN</div>
+          <p>Handelsrouten planen, Konvois koordinieren, Marktpreise im Blick behalten und Fracht dorthin bringen, wo sie gebraucht wird.</p>
+        </div>
+        <div class="dept-card dept-security">
+          <h3>Security</h3>
+          <div class="dept-sub">ESKORTE · VERTEIDIGUNG · PMC</div>
+          <p>Konvois eskortieren, Bedrohungen abwehren und dafür sorgen, dass jede Fracht sicher am Ziel ankommt.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mitglied-werden">
+      <div class="eyebrow">Mitmachen</div>
+      <h2>Mitglied werden</h2>
+      <p class="lede">Neue Mitglieder starten als Recruit und wählen anschließend ihre Abteilung. Erfahrung ist willkommen, aber nicht Voraussetzung.</p>
+      <div class="cta-box">
+        <p>Bewirb dich über die RSI-Org-Seite oder tritt direkt unserem Discord bei, um dich vorzustellen.</p>
+        <a class="btn" href="https://robertsspaceindustries.com/orgs/BLKTC">RSI-Org-Seite</a>
+        <a class="btn ghost" href="https://discord.gg/kf6RuXQqX8">Discord beitreten</a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <div>BLACKRAIL TRADING CO. — SID: BLKTC</div>
+  <div>Wo andere Handelsrouten meiden, fährt die Blackrail.</div>
+</footer>
+
+<script>
+const links = document.querySelectorAll('.navlink');
+const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+function onScroll(){
+  let idx = 0;
+  const y = window.scrollY + 120;
+  sections.forEach((s,i) => { if(s && s.offsetTop <= y) idx = i; });
+  links.forEach((l,i) => l.classList.toggle('active', i === idx));
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+links.forEach(l => l.addEventListener('click', () => {
+  if(window.innerWidth <= 860) document.querySelector('.sidebar').classList.remove('open');
+}));
+</script>
+
+</body>
+</html>
